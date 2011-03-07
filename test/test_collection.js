@@ -144,3 +144,49 @@ exports['TreeMap.size'] = function(test) {
 
   test.done();
 };
+
+exports['TreeMap.subMap.error'] = function(test) {
+  var treemap = getTestTreeMap(10);
+
+  try {
+    var submap = treemap.subMap(new TestKey(8), false, new TestKey(6), false);
+    test.fail("Should throw error when start > end");
+  } catch (e) {
+  }
+
+  test.done();
+};
+
+exports['TreeMap.subMap.non_inclusive'] = function(test) {
+  var treemap = getTestTreeMap(10);
+  var submap = treemap.subMap(new TestKey(3), false, new TestKey(6), false);
+  // lowest & highest
+  test.deepEqual(submap.absLowest().key, new TestKey(4));
+  test.deepEqual(submap.absHighest().key, new TestKey(5));
+
+  // ceiling
+  test.deepEqual(submap.absCeiling(new TestKey(0)).key, new TestKey(4));
+  test.ok(null === submap.absCeiling(new TestKey(6)));
+  test.deepEqual(submap.absCeiling(new TestKey(5)).key, new TestKey(5));
+  test.deepEqual(submap.absCeiling(new TestKey(4.2)).key, new TestKey(5));
+  
+  // higher
+  test.deepEqual(submap.absHigher(new TestKey(0)).key, new TestKey(4));
+  test.ok(null === submap.absHigher(new TestKey(5)));
+  test.deepEqual(submap.absHigher(new TestKey(4)).key, new TestKey(5));
+  test.deepEqual(submap.absHigher(new TestKey(4.2)).key, new TestKey(5));
+
+  // floor 
+  test.ok(null === submap.absFloor(new TestKey(0)));
+  test.deepEqual(submap.absFloor(new TestKey(6)).key, new TestKey(5));
+  test.deepEqual(submap.absFloor(new TestKey(5.2)).key, new TestKey(5));
+  test.deepEqual(submap.absFloor(new TestKey(4)).key, new TestKey(4));
+ 
+  // lower
+  test.ok(null === submap.absLower(new TestKey(0)));
+  test.deepEqual(submap.absLower(new TestKey(6)).key, new TestKey(5));
+  test.deepEqual(submap.absLower(new TestKey(5.2)).key, new TestKey(5));
+  test.deepEqual(submap.absLower(new TestKey(5)).key, new TestKey(4));
+
+  test.done();
+};
