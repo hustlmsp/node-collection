@@ -241,6 +241,14 @@ var TreeMap = function(comparator) {
     this.color = COLOR.BLACK;
   };
 
+  function keyOrNull(e) {
+    return null === e ? null : e.key;
+  }
+
+  function key(e) {
+    return e.key;
+  }
+
   ///
   /// Private methods
   ///
@@ -481,6 +489,7 @@ var TreeMap = function(comparator) {
       }
     }
   }
+  this.deleteEntry = deleteEntry;
 
   function clear() {
     ++_modCnt;
@@ -676,6 +685,7 @@ var TreeMap = function(comparator) {
     }
     return p;
   }
+  this.getFirstEntry = getFirstEntry;
 
   function getLastEntry() {
     var p = _root;
@@ -686,6 +696,7 @@ var TreeMap = function(comparator) {
     }
     return p;
   }
+  this.getLastEntry = getLastEntry;
 
   function successor(p) {
     var t, ch;
@@ -949,7 +960,7 @@ var TreeMap = function(comparator) {
     }
 
     function inRange(key, inclusive) {
-      if (!inclusive) {
+      if (false === inclusive) {
         return inClosedRange(key);
       }
       return !tooLow(key) && !tooHigh(key);
@@ -961,7 +972,7 @@ var TreeMap = function(comparator) {
     }
 
     function absLowest() {
-      var e = _fromStart ? _map.getFristEntry() : (_loInclusive ? _map.getCeilingEntry(_lo) : _map.getHigherEntry(_lo));
+      var e = _fromStart ? _map.getFirstEntry() : (_loInclusive ? _map.getCeilingEntry(_lo) : _map.getHigherEntry(_lo));
       return null === e || tooHigh(e.key) ? null : e;
     }
     this.absLowest = absLowest;
