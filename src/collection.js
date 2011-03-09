@@ -44,7 +44,7 @@ var HashMap = function(compareFunc, hashFunc, initialCapacity, loadFactor) {
   var _hashFunc = hashFunc;
 
   var _loadFactor = (!loadFactor || loadFactor <= 0) ? DEFAULT_LOAD_FACTOR : loadFactor;
-  var _capacity = initialCapacity <= 0 ? DEFAULT_INITIAL_CAPACITY : initilaCapacity;
+  var _capacity = (!intialCapacity || initialCapacity <= 0) ? DEFAULT_INITIAL_CAPACITY : initilaCapacity;
   var _threshold = _capacity * _loadFactor;
   var _table = new Array(_capacity);
   var _size = 0;
@@ -130,8 +130,31 @@ var HashMap = function(compareFunc, hashFunc, initialCapacity, loadFactor) {
     _threshold = _capacity * _loadFactor;
   }
 
-  function transfter(newTable) {
-    // TODO
+  function transfer(newTable) {
+    var src = _table;
+    var newCapacity = newTable.length;
+    var oldCapacity = _table.length;
+    for (var i = 0; i < oldCapacity; i++) {
+      if (!src[i]) {
+        var e = src[i];
+        do {
+          var next = e.next;
+          var idx = HashMap.indexFor(e.hash, newCapacity);
+          e.next = newTable[i];
+          newTable[i] = e;
+          e = next;
+        } while (!e);
+      }
+    }
+    return newTable;
+  }
+
+  function addEntry(hash, key, value, bucketIndex) {
+    var e = _table[bucketIndex];
+    _table[bucketIndex] = new Entry(hash, key, value, e);
+    if (_size++ >= _threshold) {
+      resize(2 * _table.length); 
+    }
   }
 
   ///

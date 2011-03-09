@@ -10,6 +10,10 @@ function testCompareFunc(k1, k2) {
   return k1.key - k2.key;
 }
 
+function testHashFunc(k) {
+  return k.key;
+}
+
 function getTestTreeMap(size) {
   var treemap = new TreeMap(testCompareFunc);
   for (var i = 0; i < size; i++) {
@@ -17,6 +21,15 @@ function getTestTreeMap(size) {
     treemap.put(testKey, testKey);
   }
   return treemap;
+}
+
+function getTestHashMap(size) {
+  var hashmap = new HashMap(testCompareFunc, testHashFunc);
+  for (var i = 0; i < size; i++) {
+    var testKey = new TestKey(i);
+    hashmap.put(testKey, testKey);
+  }
+  return hashmap;
 }
 
 exports['TreeMap.firstKey'] = function(test) {
@@ -383,3 +396,10 @@ exports['TreeMap.tailMap'] = function(test) {
   test.done();
 };
 
+exports['HashMap.get'] = function(test) {
+  var hashmap = getTestHashMap(0);
+
+  tesk.ok(null === hashmap.get(new TestKey(1)));
+
+  test.done();
+};
