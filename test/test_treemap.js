@@ -1,17 +1,23 @@
-var collection = require("../src/collection");
-
-var TreeMap = collection.TreeMap;
+var TreeMap = require("../src/treemap").TreeMap;
 
 var TestKey = function(key) {
   this.key = key;
 };
 
 function testCompareFunc(k1, k2) {
-  return k1.key - k2.key;
+  if (null === k1 && null === k2) {
+    return 0;
+  } else if (null === k1) {
+    return -1;
+  } else if (null === k2) {
+    return 1;
+  } else {
+    return k1.key - k2.key;
+  }
 }
 
 function testHashFunc(k) {
-  return k.key;
+  return k.key % 10;
 }
 
 function getTestTreeMap(size) {
@@ -21,15 +27,6 @@ function getTestTreeMap(size) {
     treemap.put(testKey, testKey);
   }
   return treemap;
-}
-
-function getTestHashMap(size) {
-  var hashmap = new HashMap(testCompareFunc, testHashFunc);
-  for (var i = 0; i < size; i++) {
-    var testKey = new TestKey(i);
-    hashmap.put(testKey, testKey);
-  }
-  return hashmap;
 }
 
 exports['TreeMap.firstKey'] = function(test) {
@@ -392,14 +389,6 @@ exports['TreeMap.tailMap'] = function(test) {
   test.ok(submap.containsKey(new TestKey(9)));
   test.deepEqual(submap.remove(new TestKey(9)), new TestKey(9));
   test.ok(false === submap.containsKey(new TestKey(9)));
-
-  test.done();
-};
-
-exports['HashMap.get'] = function(test) {
-  var hashmap = getTestHashMap(0);
-
-  tesk.ok(null === hashmap.get(new TestKey(1)));
 
   test.done();
 };

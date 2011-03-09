@@ -1,0 +1,13 @@
+{
+  "name": "collections",
+  "description": "A utility for representing and manipulating collections for nodejs.",
+  "version": "0.0.1",
+  "homepage": "https://github.com/hustlmsp/node-collection",
+  "repository": "git://github.com/hustlmsp/node-collection.git",
+  "author": "Sijie Guo <sijie0413@gmail.com>",
+  "main": "./index",
+  "engines": {
+    "node": ">=0.2.6"
+  },
+  "keywords": [ "collection", "TreeMap", "HashMap" ],
+}
