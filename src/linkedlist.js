@@ -141,7 +141,7 @@ var LinkedList = function(compareFunc) {
   this.setAt = setAt;
 
   function addAt(index, element) {
-    addBefore(element, (size === index ? _head : entry(index)));
+    addBefore(element, (_size === index ? _head : entry(index)));
   }
   this.addAt = addAt;
 
@@ -172,7 +172,7 @@ var LinkedList = function(compareFunc) {
   this.indexOf = indexOf;
 
   function lastIndexOf(element) {
-    var index = 0;
+    var index = _size;
     if (null === element) {
       for (var e = _head.prev; e !== _head; e = e.prev) {
         --index;
@@ -246,7 +246,7 @@ var LinkedList = function(compareFunc) {
 
   this.peek = peekFirst;
   this.poll = pollFirst;
-  this.offer = this.offerFirst;
+  this.offer = this.offerLast;
 
   function addBefore(element, entry) {
     var newEntry = new Entry(element, entry, entry.prev);
