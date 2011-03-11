@@ -6,3 +6,4 @@ exports.TreeMap = require('./src/treemap.js').TreeMap;
 exports.LinkedList = require('./src/linkedlist.js').LinkedList;
 exports.PriorityQueue = require('./src/priorityqueue.js').PriorityQueue;
 exports.HashSet = require('./src/hashset.js').HashSet;
+exports.TreeSet = require('./src/treeset.js').TreeSet;
