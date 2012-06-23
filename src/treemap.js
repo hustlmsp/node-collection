@@ -1,7 +1,7 @@
 /**
  * @fileOverview Tree Map implementation
  */
-var sys = require ('sys'),
+var util = require('util'),
     Map = require ('./map').Map;
 
 ///
@@ -937,7 +937,7 @@ var TreeMap = function(comparator) {
   
   };
 
-  sys.inherits(DescendingSubMap, AscendingSubMap);
+  util.inherits(DescendingSubMap, AscendingSubMap);
   
   this.subMap = function(fromKey, fromInclusive, toKey, toInclusive) {
     return new AscendingSubMap(that, false, fromKey, fromInclusive, false, toKey, toInclusive);
